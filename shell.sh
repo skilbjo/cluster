@@ -10,7 +10,7 @@ MV="cd git ; mv llcomputing/ llcomputing.git/"
 NPM="sudo pacman -S npm"
 COMMAND=$NPM
 
-for i in {1..4}; do
+for i in {1..2}; do
 	ssh pi$i $COMMAND
 done
 
