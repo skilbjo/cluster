@@ -40,4 +40,4 @@
 >$ pi	ssh://skilbjo@skilbjo.duckdns.org:144/~/git/llcomputing.git (push)
 >$ pi	ssh://skilbjo@skilbjo.duckdns.org:145/~/git/llcomputing.git (push)
 >$ pi	ssh://skilbjo@skilbjo.duckdns.org:146/~/git/llcomputing.git (push)
-````
+````.

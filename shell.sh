@@ -7,7 +7,8 @@ SHUTDOWN="sudo shutdown -h now"
 GIT="mkdir git ; cd git ; mkdir llcomputing ; cd llcomputing ; git init --bare"
 APP="mkdir app ; cd app ; mkdir llcomputing"
 MV="cd git ; mv llcomputing/ llcomputing.git/"
-COMMAND=$MV
+NPM="sudo pacman -S npm"
+COMMAND=$NPM
 
 for i in {1..4}; do
 	ssh pi$i $COMMAND

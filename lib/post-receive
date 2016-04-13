@@ -7,6 +7,7 @@ GIT_WORK_TREE="$DEPLOYDIR" git checkout -f
 
 cd "$DEPLOYDIR"
 
+
 npm install
 
 echo 'All done :D'
