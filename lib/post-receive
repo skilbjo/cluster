@@ -1,8 +1,7 @@
 #!/bin/sh
 
 APP=llcomputing
-DEPLOYDIR=~/node/app/$APP
-CRONDIR=/etc/cron.d
+DEPLOYDIR=~/app/$APP
 
 GIT_WORK_TREE="$DEPLOYDIR" git checkout -f
 
@@ -10,6 +9,6 @@ cd "$DEPLOYDIR"
 
 npm install
 
-sudo cp lib/crontab $CRONDIR/$APP
-
 echo 'All done :D'
+
+exit
