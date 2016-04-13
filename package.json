@@ -1,11 +1,11 @@
 {
-  "name": "cluster",
-  "main": "cluster.js",
+  "name": "parallel-computing",
+  "main": "parallel-computing.js",
   "version": "0.0.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/skilbjo/cluster.git"
+    "url": "https://github.com/skilbjo/parallel-computing.git"
   },
   "engines": {
     "node": "5.10.1"
