@@ -41,3 +41,16 @@
 >$ pi	ssh://skilbjo@skilbjo.duckdns.org:145/~/git/llcomputing.git (push)
 >$ pi	ssh://skilbjo@skilbjo.duckdns.org:146/~/git/llcomputing.git (push)
 ````.
+
+## Measure speed
+
+````
+$ time mpiexec --machinefile machinefile --map-by node -n 4 hostname
+real	0m1.101s
+
+$ time mpiexec --machinefile machinefile --map-by core -n 4 hostname
+real	0m1.112s
+
+
+
+````

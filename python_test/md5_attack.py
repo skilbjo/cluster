@@ -1,9 +1,9 @@
 import hashlib
 hash_to_crack = "098f6bcd4621d373cade4e832627b4f6"
-dict_file = "dict.txt"
+dict_file = "python_test/dict.txt"
 
 def main():
-    with open(dict_file) as fileobj:
+    with open(dict_file,'r') as fileobj:
         for line in fileobj:
             line = line.strip()
             if hashlib.md5(line).hexdigest() == hash_to_crack:
