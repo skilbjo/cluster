@@ -20,10 +20,10 @@ The tools used are all open source and work with many processor architectures, s
 
 ## Guide
 
--- [Install](github.com/skilbjo/llcomputing/) // INSTALL.md
--- [MPICH]() // MPICH.md
--- [Multi core threading / forking w/ node.js]() // MULTI_CORE_NODEJS.md
--- [Using the repo]() REPO.md
+- [Install](github.com/skilbjo/llcomputing/) // INSTALL.md
+- [MPICH]() // MPICH.md
+- [Multi core threading / forking w/ node.js]() // MULTI_CORE_NODEJS.md
+- [Using the repo]() REPO.md
 
 ## Scripts
 
@@ -43,14 +43,6 @@ real	0m1.101s
 $ time mpiexec --machinefile machinefile --map-by core -n 4 hostname
 real	0m1.112s
 
-
-
 ````
 
-## Scripting
 
-
-````
-$ mpiexec --machinefile machinefile --map-by node -n 4 python python/md5_attack.py 
-
-````

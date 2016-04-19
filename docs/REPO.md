@@ -1,3 +1,15 @@
+# Install the repo
+
+On the master computer (not necessary the nodes for the cluster):
+`git clone https://github.com/skilbjo/llcomputing`
+
+In the node clusters:
+````
+for {1..4}; do
+	ssh [hostname]$i "mkdir -p ~/git/llcomputing.git; \
+		cd ~/git/llcomputing.git ; git init --bare"
+````
+
 ## git
 ````
 $ llcomputing $ git remote add pi ssh://skilbjo@skilbjo.duckdns.org:143/~/git/llcomputing.git
@@ -16,4 +28,13 @@ $ pi	ssh://skilbjo@skilbjo.duckdns.org:143/~/git/llcomputing.git (fetch)
 $ pi	ssh://skilbjo@skilbjo.duckdns.org:144/~/git/llcomputing.git (push)
 $ pi	ssh://skilbjo@skilbjo.duckdns.org:145/~/git/llcomputing.git (push)
 $ pi	ssh://skilbjo@skilbjo.duckdns.org:146/~/git/llcomputing.git (push)
+````
+
+
+## Scripting
+
+
+````
+$ mpiexec --machinefile machinefile --map-by node -n 4 python python/md5_attack.py 
+
 ````
