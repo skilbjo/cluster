@@ -1,9 +1,33 @@
+# llcomputing
 
+## Arch Linux install guide
 
+Installation guide: https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3 
 
-## Make a clone of an SD card, but just the boot sector
+## Move the /root partition to 
 
-sudo fdisk /dev/sdb
+Once the operating system is installed, move the /root partition to a more stable memory medium (SSD).
+
+Guide: https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=44177
+
+## Arch Linux clode guide
+
+Due to the raspberry pi bootloader, 
+
+- stage 1: GPU executes first stage bootloader stored in ROM on the SoC, which loads bootcode.bin into L2 cache and executes it
+- stage 2: bootcode.bin enables SDRAM, which reads the third stage bootloader (loader.bin) from the SD card into RAM, and executes it
+- stage 3: loader.bin reads the GPU firmware, start.elf, which reads config.txt which then loads => cmdline.txt and kernel.img
+
+Stage 1 exists in ROM, but stage 2 and stage 3 files must live in the /dev/mmcblk0p7 partition.
+
+If the SD card holding the /dev/mmcblk0p7 parition ever becomes corrupted, we just need to replace it with the valid boot files.
+
+Guide to formatting a boot partition on a debian system.
+
+- insert two USB SD card readers into the USB ports
+- format the clone card to mimic partition scheme:
+
+		sudo fdisk /dev/sdb
 
 		Command (m for help): d
 		Selected partition 1
@@ -16,8 +40,6 @@ sudo fdisk /dev/sdb
 		I/O size (minimum/optimal): 512 bytes / 512 bytes
 		Disklabel type: dos
 		Disk identifier: 0x00000000
-
-
 
 		Command (m for help): n
 		Partition type
@@ -48,7 +70,8 @@ sudo fdisk /dev/sdb
 		Calling ioctl() to re-read partition table.
 		Syncing disks.
 
-Change file system type
+
+- change the file system type of the first partiition to W95 FAT32
 
 		Command (m for help): t
 		Partition number (1,2, default 2): 1
@@ -74,9 +97,10 @@ Change file system type
 		Calling ioctl() to re-read partition table.
 		Syncing disks.
 
-Copy just the boot partion:
+- use dd (still in debian) to clone the boot partion from the parent to the clone:
 
-sudo dd if=/dev/sda1 | pv | sudo dd of=/dev/sdb1
+		sudo dd if=/dev/sda1 | pv | sudo dd of=/dev/sdb1
 
+- clone a backup image onto an OS X laptop
 
-sudo dd if=/dev/rdisk2s1 bs=1m | pv | sudo dd of=boot.img
+		sudo dd if=/dev/rdisk2s1 bs=1m | pv | sudo dd of=boot.img

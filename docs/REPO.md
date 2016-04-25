@@ -1,4 +1,6 @@
-# Install the repo
+# llcomputing 
+
+## Install the repository
 
 On the master computer (not necessary the nodes for the cluster):
 `git clone https://github.com/skilbjo/llcomputing`

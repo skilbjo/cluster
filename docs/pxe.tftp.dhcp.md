@@ -1,26 +1,53 @@
+# llcomputing
 
+## Network booting the linux kernel image for the cluster
 
-Compile u-boot in OS X virtual machine
+Use a TFTP/proxyDHCP boot to search the network for a kernel image to load the operating system.
 
-https://blog.night-shade.org.uk/2015/05/booting-a-raspberry-pi2-with-u-boot-and-hyp-enabled/
-
+## Dependencies
 - VirtualBox: https://www.virtualbox.org/wiki/Downloads
 - Debian9: http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/
 
-Run:
-		sudo apt-get install gcc-arm-linux-gnueabihf
-		export ARCH=arm
-		export CROSS_COMPILE=arm-linux-gnueabihf-
-Clone u-boot
-		git clone git://git.denx.de/u-boot.git
-		cd u-boot
-		make rpi_2_defconfig
-		make all
+## Guide
+- spin up debian/ubuntu virtualbox from an x86 host computer (OS X)
+- Install gcc arm compiler: `sudo apt install gcc-arm-linux-gnueabihf`
+- Set `ARCH` varaible: `export ARCH=arm`
+- Set `CROSS_COMPILE` variable: `export CROSS_COMPILE=arm-linux-gnueabihf-`
+- Clone the `u-boot` repository: `git clone git://git.denx.de/u-boot.git`
+- Change directories: `cd u-boot`
+- Set the configuration parameters before compilation: `make rpi_2_defconfig`
+- Install `bc`: `sudo apt-get install bc`
+- Compile: `make all`
+- Route the bluetooth chip to the mini-uart via `echo 'dtoverlay=pi3-miniuart-bt' >> config.txt` 
+-	Copy/paste `u-boot.bin` on the `/boot` partition of the SD card, and change `config.txt` to say: `kernel=u-boot.bin`
 
-Copy/paste `u-boot.bin` on the `/boot` partition of the SD card, and change `config.txt` to say: `kernel=u-boot.bin`
 
+## Set up a tftp server
 
-TFTP server: 
+Set up a TFTP server to server the kernel image
+
+- `sudo apt-get install tftpd-hpa`
+- `echo 'TFTP_USERNAME="tftp" \`
+		`TFTP_DIRECTORY="/srv/tftp" \` 
+		`TFTP_ADDRESS="0.0.0.0:69" \`
+		`TFTP_OPTIONS="--secure"' > /etc/default/tftpd-hpa`
+- `mv ~/kernel7.img /srv/tftp/kernel7.img`
+
+Now test it:
+- `tftp localhost`
+- `tftp > get kernel7.img`
+- `999 bytes transfered OK`
+
 - http://processors.wiki.ti.com/index.php/Booting_Linux_kernel_using_U-Boot
 
+## Create two files to set environment variables and script the bootload process
+- `echo 'set fdtfile bcm2710-rpi-3-b.dtb' >> uenv.txt`
+- `echo 'dev mcc 0 \`
+		`fatload mmc 0:1 ${kernel_addr_r} kernel7.img \`
+		`fatload mmc 0:1 ${fdt_addr_r} bcm2710-rpi-3-b.dtb \`
+		`setenv bootargs earlyprintk dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=noop noinitrd rw rootwait \`
+		`bootz ${kernel_addr_r} - ${fdt_addr_r} \`
+		`' >> boot.scr.source`
+- `mkimage -A arm -O linux -T script -C none -n boot.scr -d boot.scr boot.scr.source`
+- place `uenv.txt` and `boot.scr` on the SD card
 
