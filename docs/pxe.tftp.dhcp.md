@@ -24,3 +24,14 @@ TFTP server:
 - http://processors.wiki.ti.com/index.php/Booting_Linux_kernel_using_U-Boot
 
 
+u-boot>
+
+setenv ftd file bcm2709-rpi-3-b.dtb
+mmc dev 0
+
+fatload mmc 0:1 ${kernel_addr_r} kernel7.img
+fatload mmc 0:1 ${fdt_addr_r} bcm2710-rpi-3-b-disable-bt.dtb
+setenv bootargs earlyprintk dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/sda1 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+bootz ${kernel_addr_r} - ${fdt_addr_r}
+
+
