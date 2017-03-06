@@ -46,5 +46,3 @@ $ time mpiexec --machinefile machinefile --map-by core -n 4 hostname
 real	0m1.112s
 
 ````
-
-

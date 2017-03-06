@@ -1,0 +1,16 @@
+#!/bin/bash
+set -eou pipefail
+
+source ./command_ctr
+
+## Assignment
+command=${dotfiles}
+
+function send_to_cluster {
+  for i in {3..6}; do (
+    ssh -p "4${i}" router. "$command" &  # on VPN
+    #ssh 192.168.2.4"$i" "$command" &
+  ); done
+}
+
+send_to_cluster
