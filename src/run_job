@@ -1,15 +1,18 @@
 #!/bin/bash
 set -eou pipefail
 
-source ./command_ctr
+source src/command_ctr
 
 ## Assignment
 command=${dotfiles}
 
 function send_to_cluster {
   for i in {3..6}; do (
-    ssh -p "4${i}" router. "$command" &  # on VPN
-    #ssh 192.168.2.4"$i" "$command" &
+    #ssh -p "4${i}" router. "$command" &  # on VPN
+    ssh 192.168.2.4"$i" "$command" &    # on home
+
+    #ssh 192.168.2.4"$i" "sudo -A mount /dev/sdb1 ~/usb-drive && chmod 600 ~/usb-drive/swapfile1" &    # on home
+    #ssh 192.168.2.4"$i" "sleep 2 && sudo swapon ~/usb-drive/swapfile1" &    # on home
   ); done
 }
 

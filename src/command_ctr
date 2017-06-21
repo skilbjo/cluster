@@ -8,15 +8,11 @@ function swap_on(){
 
 ## Commands
 update="sudo pacman -Syyu --noconfirm"
-dependencies="sudo pacman -Syyu bash coreutils findutils realpath curl cron"
-process="ps aux | grep node"
-shutdown="sudo shutdown -h now"
-yaourt="yaourt binfmt-support"
-dotfiles="mkdir -p ~/dev; cd ~dev/; git clone git@github.com:skilbjo/dotfiles.git"
 dotfiles="cd ~/dev/dotfiles; git pull"
+
+software="sudo pacman -Su keychain --noconfirm"
+install_software="sudo pacman -S PACKAGE_HERE --noconfirm"
+shutdown="sudo shutdown -h now"
+reboot="sudo reboot"
 uptime="uptime"
-cron="sudo pacman -Syu cronie --noconfirm"
-cron="sudo systemctl enable --now cronie.service"
-postgres="sudo pacman -Syu postgresql --noconfirm"
-postgres="sudo systemctl enable --now postgresql.service"
 
